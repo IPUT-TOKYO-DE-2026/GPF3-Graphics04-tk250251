@@ -32,6 +32,8 @@ int centerX; // 円の中心座標X
 int centerY; // 円の中心座標Y
 int radius;  // 円の半径
 
+unsigned char color[3] = { 10, 200, 0 }; // B, G, R
+
 // 初期化処理（最初に1回だけ呼び出される）
 void FrameBufferEmulator::initUser()
 {
@@ -44,10 +46,17 @@ void FrameBufferEmulator::initUser()
 // 描画処理（毎フレーム呼び出される）
 void FrameBufferEmulator::drawUser(unsigned char* buff, int mode, int keyLevel, int keyTrigger)
 {
-	unsigned char color[3] = { 10, 200, 0 }; // B, G, R
-
 	if (keyTrigger == SDLK_UP) { // 上矢印キーが押されたら
 		radius++;  // 半径を大きくする
+	}
+	if (keyTrigger == SDLK_DOWN) { // 下矢印キーが押されたら
+		radius--;  // 半径を小さくする
+	}
+	if (keyTrigger == SDLK_RIGHT) {
+		color[0] += 10;
+	}
+	if (keyTrigger == SDLK_LEFT) {
+		color[2] += 10;
 	}
 	drawFilledCircle(buff, width, height, radius, centerX, centerY, color); // 円を描画する
 }
